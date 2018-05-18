@@ -3,7 +3,7 @@ package com.my.o2o.entity;
 import java.util.Date;
 
 public class Area {
-	private Integer areaId;
+    private Integer areaId;
 	private Integer priority;
 	private String areaName;
 	private Date createTime;
