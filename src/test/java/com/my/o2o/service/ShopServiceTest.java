@@ -1,27 +1,27 @@
-package com.my.o2o.dao;
+package com.my.o2o.service;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
 import java.util.Date;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.my.o2o.BaseTest;
+import com.my.o2o.dto.ShopExecution;
 import com.my.o2o.entity.Area;
 import com.my.o2o.entity.PersonInfo;
 import com.my.o2o.entity.Shop;
 import com.my.o2o.entity.ShopCategory;
 import com.my.o2o.enums.ShopStateEnum;
 
-public class ShopDaoTest extends BaseTest{
+public class ShopServiceTest extends BaseTest{
     @Autowired
-    private ShopDao shopDao;
+    private ShopService shopService;
     
     @Test
-    @Ignore
-    public void testInsertShop(){
+    public void testAddShop(){
         Shop shop = new Shop();
         PersonInfo owner = new PersonInfo();
         Area area = new Area();
@@ -43,28 +43,9 @@ public class ShopDaoTest extends BaseTest{
         //shop.setLastEditTime(new Date());
         shop.setEnableStatus(ShopStateEnum.CHECK.getState());
         shop.setAdvice("审核中");
+        File shopImg = new File("C:/Users/Administrator/Desktop/桌面壁纸/timg.jpg");
+        ShopExecution shopExecution = shopService.addShop(shop, shopImg);
         
-        int effectedNum = shopDao.insertShop(shop);
-        assertEquals(1, effectedNum);
-    }
-    
-    @Test
-    public void testUpdateShop(){
-        Shop shop = new Shop();
-//        String forTest = "test";
-        String updateTest = "update";
-        shop.setShopId(1L);
-        
-        shop.setShopDesc(updateTest);
-        shop.setShopAddr(updateTest);
-        shop.setPhone(updateTest);
-//        shop.setShopImg(updateTest);
-//        shop.setCreateTime(new Date());
-        shop.setLastEditTime(new Date());
-//        shop.setEnableStatus(1);
-//        shop.setAdvice("审核中");
-        
-        int effectedNum = shopDao.updateShop(shop);
-        assertEquals(1, effectedNum);        
+        assertEquals(ShopStateEnum.CHECK.getState(), shopExecution.getState());
     }
 }

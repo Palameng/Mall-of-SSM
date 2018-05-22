@@ -2,7 +2,7 @@ package com.my.o2o.util;
 
 public class PathUtil {
     
-    private static String seperator = System.getProperty("file.seperator");
+    private static String seperator = System.getProperty("file.separator");
     
     public static String getImgBasePath(){
         String oString = System.getProperty("os.name");
@@ -17,6 +17,7 @@ public class PathUtil {
     }
     
     public static  String getShopImagePath(long shopId){
+        //windows的还是要加这个/
         String imagePath = "/upload/item/shop/" + shopId + "/";
         return imagePath.replace("/", seperator);
     }
