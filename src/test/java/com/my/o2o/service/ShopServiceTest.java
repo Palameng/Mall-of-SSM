@@ -3,6 +3,9 @@ package com.my.o2o.service;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Date;
 
 import org.junit.Test;
@@ -21,12 +24,12 @@ public class ShopServiceTest extends BaseTest{
     private ShopService shopService;
     
     @Test
-    public void testAddShop(){
+    public void testAddShop() throws FileNotFoundException{
         Shop shop = new Shop();
         PersonInfo owner = new PersonInfo();
         Area area = new Area();
         ShopCategory shopCategory = new ShopCategory();
-        String forTest = "test1";
+        String forTest = "test3";
         
         owner.setUserId(1L);
         area.setAreaId(2);
@@ -34,7 +37,7 @@ public class ShopServiceTest extends BaseTest{
         shop.setOwner(owner);
         shop.setArea(area);
         shop.setShopCategory(shopCategory);
-        shop.setShopName("店铺1");
+        shop.setShopName("店铺3");
         shop.setShopDesc(forTest);
         shop.setShopAddr(forTest);
         shop.setPhone(forTest);
@@ -44,7 +47,8 @@ public class ShopServiceTest extends BaseTest{
         shop.setEnableStatus(ShopStateEnum.CHECK.getState());
         shop.setAdvice("审核中");
         File shopImg = new File("C:/Users/Administrator/Desktop/桌面壁纸/timg.jpg");
-        ShopExecution shopExecution = shopService.addShop(shop, shopImg);
+        InputStream inputStream_shopImg = new FileInputStream(shopImg);
+        ShopExecution shopExecution = shopService.addShop(shop, inputStream_shopImg, shopImg.getName());
         
         assertEquals(ShopStateEnum.CHECK.getState(), shopExecution.getState());
     }

@@ -2,6 +2,7 @@ package com.my.o2o.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -48,12 +49,12 @@ public class ImageUtil {
      * @param targetAddr
      * @return
      */
-    public static String generateThumbnail(File thumbnail, String targetAddr){
+    public static String generateThumbnail(InputStream thumbnailInputStream, String fileName, String targetAddr){
         //获取一个随机文件名用于压缩生成的新图片
         String realFileName = getRandomFileName();
         
         //获取到目标图片的扩展名以准备给新文件名使用
-        String extension = getFileExtension(thumbnail);
+        String extension = getFileExtension(fileName);
         
         //为指定目标地址中未生成的文件夹生成文件夹
         makeDirPath(targetAddr);
@@ -68,7 +69,7 @@ public class ImageUtil {
         
         //压缩目标图片，加上水印，并输出新图片到指定位置
         try{
-            Thumbnails.of(thumbnail)
+            Thumbnails.of(thumbnailInputStream)
             .size(200, 200)
             .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "/watermark.jpg")), 0.25f)
             .outputQuality(0.8f)
@@ -100,16 +101,15 @@ public class ImageUtil {
      * @param thumbnail
      * @return
      */
-    private static String getFileExtension(File cFile) {
-        String originalFileName = cFile.getName();
-        return originalFileName.substring(originalFileName.lastIndexOf("."));
+    private static String getFileExtension(String fileName) {
+        return fileName.substring(fileName.lastIndexOf("."));
     }
 
     /**
      * 生成随机文件名
      * @return
      */
-    private static String getRandomFileName() {
+    public static String getRandomFileName() {
         // 获取随机的五位数
         int rannum = r.nextInt(89999) + 10000;
         String nowTimeStr = sDateFormat.format(new Date());
