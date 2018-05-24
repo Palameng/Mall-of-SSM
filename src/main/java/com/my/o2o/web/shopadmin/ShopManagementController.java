@@ -1,23 +1,31 @@
 package com.my.o2o.web.shopadmin;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.my.o2o.dto.ShopExecution;
+import com.my.o2o.entity.Area;
 import com.my.o2o.entity.PersonInfo;
 import com.my.o2o.entity.Shop;
+import com.my.o2o.entity.ShopCategory;
 import com.my.o2o.enums.ShopStateEnum;
 import com.my.o2o.exceptions.ShopOperationException;
+import com.my.o2o.service.AreaService;
+import com.my.o2o.service.ShopCategoryService;
 import com.my.o2o.service.ShopService;
+import com.my.o2o.util.CodeUtil;
 import com.my.o2o.util.HttpServletRequestUtil;
 
 @Controller
@@ -26,10 +34,54 @@ public class ShopManagementController {
     
     @Autowired
     private ShopService shopService;
+    @Autowired
+    private ShopCategoryService shopCategoryService;
+    @Autowired
+    private AreaService areaService;
     
+    /**
+     * 获取商店类型下拉列表和区域下拉列表的内容，其中商店类型下拉列表显示的是非第一级的内容，区域为所有可选区域
+     * @return
+     */
+    @RequestMapping(value="/getshopinitinfo", method=RequestMethod.GET)
+    @ResponseBody
+    private Map<String, Object> getShopInitInfo(){
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<ShopCategory> shopCategories = new ArrayList<ShopCategory>();
+        List<Area> areas = new ArrayList<Area>();
+        try {
+            //获取所有类别的列表
+            shopCategories = shopCategoryService.getShopCategoryList(new ShopCategory());
+            areas = areaService.getAreaList();
+            
+            modelMap.put("shopCategoryList", shopCategories);
+            modelMap.put("areaList", areas);
+            modelMap.put("success", true);
+        } catch (Exception e) {
+            modelMap.put("success", false);
+            modelMap.put("errMsg", e.getMessage());
+        }
+        
+        return modelMap;
+    }
+    
+    /**
+     * 店铺注册功能
+     * 1 首先将前端传递下来的shopStr解析成实体类
+     * 2 之后接收上传图片的File
+     * 3 把所有信息加入addshop函数存储到持久层中
+     * @param request 传递的请求参数
+     * @return
+     */
     @RequestMapping(value = "/registershop", method = RequestMethod.POST)
     private Map<String, Object> registerShop(HttpServletRequest request){
         Map<String, Object> modelMap = new HashMap<String, Object>();
+        
+        if(!CodeUtil.checkVerifyCode(request)){
+            modelMap.put("success", false);
+            modelMap.put("errMsg", "验证码输入错误");
+            return modelMap;
+        }
         
         //1 接收并转化相应的参数，包括店铺信息以及图片信息
         String shopStr = HttpServletRequestUtil.getString(request, "shopStr");
