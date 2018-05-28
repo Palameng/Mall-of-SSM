@@ -2,7 +2,7 @@ package com.my.o2o.util;
 
 public class PathUtil {
     
-    private static String seperator = System.getProperty("file.separator");
+    private static String separator = System.getProperty("file.separator");
     
     public static String getImgBasePath(){
         String oString = System.getProperty("os.name");
@@ -12,13 +12,14 @@ public class PathUtil {
         } else {
             basePath = "/home/my/image";
         }
-        basePath = basePath.replace("/", seperator);
+        //因为windows下的路径分隔符为\，所以需要进行转换
+        basePath = basePath.replace("/", separator);
         return basePath;
     }
     
     public static  String getShopImagePath(long shopId){
         //windows的还是要加这个/
         String imagePath = "/upload/item/shop/" + shopId + "/";
-        return imagePath.replace("/", seperator);
+        return imagePath.replace("/", separator);
     }
 }
