@@ -4,7 +4,7 @@
 $(function(){
 	var initUrl = '/o2o/shopadmin/getshopinitinfo';
 	var registerShopUrl = '/o2o/shopadmin/registershop';
-	alert(initUrl);
+	//alert(initUrl);
 	getShopInitInfo();
 	
 	function getShopInitInfo(){
@@ -17,8 +17,6 @@ $(function(){
 				data.shopCategoryList.map(function(item, index) {
 					tempHtml += '<option data-id="' + item.shopCategoryId + '">' + item.shopCategoryName + '</option>';
 				});
-				
-				alert("完成类别载入...");
 				
 				data.areaList.map(function(item, index){
 					tempAreaHtml += '<option data-id="' + item.areaId + '">' + item.areaName + '</option>';
