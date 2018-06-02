@@ -220,6 +220,7 @@ public class ShopManagementController {
      * @return
      */
     @RequestMapping(value = "/modifyshop", method = RequestMethod.POST)
+    @ResponseBody 
     private Map<String, Object> modifyshop(HttpServletRequest request){
         Map<String, Object> modelMap = new HashMap<String, Object>();
         

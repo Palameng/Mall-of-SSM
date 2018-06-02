@@ -3,6 +3,7 @@ package com.my.o2o.dao;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -70,12 +71,37 @@ public class ShopDaoTest extends BaseTest{
     }
     
     @Test
+    @Ignore
     public void testQueryByShopId(){
         long shopId = 1L;
         Shop shop = shopDao.queryByShopId(shopId);
         System.out.println("areaId:" + shop.getArea().getAreaId());
         System.out.println("areaName:" + shop.getArea().getAreaName());
         System.out.println("shopCategoryId:" + shop.getShopCategory().getShopCategoryId());
-        System.out.println("areaName:" + shop.getShopCategory().getShopCategoryName());       
+        System.out.println("areaName:" + shop.getShopCategory().getShopCategoryName());
+    }
+    
+    @Test
+    public void testQueryShopListAndCount(){
+        Shop shopCondition = new Shop();
+        PersonInfo owner = new PersonInfo();
+        
+        owner.setUserId(1L);
+        shopCondition.setOwner(owner);
+        
+        List<Shop> shopList = shopDao.queryShopList(shopCondition, 0, 5);
+        int count = shopDao.queryShopCount(shopCondition);
+        
+        System.out.println("查找到的数据条数：" + shopList.size());
+        System.out.println("店铺总数：" + count);
+        
+        ShopCategory sc = new ShopCategory();
+        sc.setShopCategoryId(1L);
+        shopCondition.setShopCategory(sc);
+        
+        shopList = shopDao.queryShopList(shopCondition, 0, 5);
+        count = shopDao.queryShopCount(shopCondition);    
+        
+        System.out.println("查找到类别ID为2的数据条数：" + shopList.size());        
     }
 }
