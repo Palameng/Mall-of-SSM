@@ -57,6 +57,7 @@ public class ShopServiceTest extends BaseTest{
     }
     
     @Test
+    @Ignore
     public void testModifyShop() throws ShopOperationException, FileNotFoundException{
         Shop shop = new Shop();
         shop.setShopId(1L);
@@ -66,4 +67,18 @@ public class ShopServiceTest extends BaseTest{
         ShopExecution shopExecution = shopService.modifyShop(shop, is, "dabai.jpg");
         System.out.println("新的图片地址为：" + shopExecution.getShop().getShopImg());
     }
+    
+    @Test
+    public void testGetShopList(){
+        Shop shopCondition = new Shop();
+        ShopCategory sc = new ShopCategory();
+        sc.setShopCategoryId(1L);
+        shopCondition.setShopCategory(sc);
+        ShopExecution shopExecution = shopService.getShopList(shopCondition, 2, 3);
+        
+        System.out.println("店铺列表数为: " + shopExecution.getShopList().size());
+        System.out.println("店铺列表数为: " + shopExecution.getCount());
+    }
 }
+
+
