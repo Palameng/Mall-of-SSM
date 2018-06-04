@@ -13,4 +13,22 @@ public class ShopAdminController {
         //这里这么配置是因为在spring-web.xml中设置了视图解析器
         return "shop/shop-operation";
     }
+    
+    @RequestMapping(value="/shop-list")
+    public String shopList(){
+        //这里这么配置是因为在spring-web.xml中设置了视图解析器
+        return "shop/shop-list";
+    }
+    
+    @RequestMapping(value="/shopmanagement")
+    public String shopManagement(){
+        //这里这么配置是因为在spring-web.xml中设置了视图解析器
+        return "shop/shopmanagement";
+    }
+    
+    @RequestMapping(value="/productcategorymanagement")
+    public String productCategoryManagement(){
+        //这里这么配置是因为在spring-web.xml中设置了视图解析器
+        return "shop/productcategorymanagement";
+    }
 }
