@@ -33,6 +33,7 @@
         </foreach>
     </insert>
     
+    <!-- 删除商品类别 -->
     <delete id="deleteProductCategory">
         DELETE FROM
         tb_product_category
