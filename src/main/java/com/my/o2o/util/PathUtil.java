@@ -4,11 +4,15 @@ public class PathUtil {
     
     private static String separator = System.getProperty("file.separator");
     
+    /**
+     * 获取图片上传后保存的基本地址
+     * @return
+     */
     public static String getImgBasePath(){
         String oString = System.getProperty("os.name");
         String basePath = "";
         if(oString.toLowerCase().startsWith("win")){
-            basePath = "C:/Users/Administrator/Desktop/桌面壁纸";
+            basePath = "C:/Users/Administrator/Desktop/imageOfSSM/save";
         } else {
             basePath = "/home/my/image";
         }

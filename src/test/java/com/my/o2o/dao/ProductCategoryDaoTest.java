@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.FixMethodOrder;
-import org.junit.Ignore;
+//import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;

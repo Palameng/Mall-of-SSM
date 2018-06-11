@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.my.o2o.dto.ImageHolder;
 import com.my.o2o.dto.ShopExecution;
 import com.my.o2o.entity.Area;
 import com.my.o2o.entity.PersonInfo;
@@ -113,24 +114,10 @@ public class ShopManagementController {
         if (shop != null && shopImg != null) {
             PersonInfo owner = (PersonInfo)request.getSession().getAttribute("user");
             shop.setOwner(owner);
-//            File shopImgFile = new File(PathUtil.getImgBasePath() + ImageUtil.getRandomFileName());
-//            try {
-//                shopImgFile.createNewFile();
-//            } catch (IOException e) {
-//                modelMap.put("success", false);
-//                modelMap.put("errMsg", e.getMessage());
-//                return modelMap;
-//            }
-//            try {
-//                inputStreamToFile(shopImg.getInputStream(), shopImgFile);
-//            } catch (IOException e) {
-//                modelMap.put("success", false);
-//                modelMap.put("errMsg", e.getMessage());
-//                return modelMap;
-//            }
             ShopExecution sExecution;
             try {
-                sExecution = shopService.addShop(shop, shopImg.getInputStream(), shopImg.getOriginalFilename());
+                ImageHolder thumbnail = new ImageHolder(shopImg.getOriginalFilename(), shopImg.getInputStream());
+                sExecution = shopService.addShop(shop, thumbnail);
                 if (sExecution.getState() == ShopStateEnum.CHECK.getState()) {
                     modelMap.put("success", true);
                     //该用户可以操作的店铺列表
@@ -260,9 +247,10 @@ public class ShopManagementController {
             try {
                 //执行修改动作
                 if (shopImg == null) {
-                    sExecution = shopService.modifyShop(shop, null, null);
+                    sExecution = shopService.modifyShop(shop, null);
                 }else {
-                    sExecution = shopService.modifyShop(shop, shopImg.getInputStream(), shopImg.getOriginalFilename());
+                    ImageHolder thumbnail = new ImageHolder(shopImg.getOriginalFilename(), shopImg.getInputStream());
+                    sExecution = shopService.modifyShop(shop,thumbnail);
                 }
 
                 if (sExecution.getState() == ShopStateEnum.SUCCESS.getState()) {

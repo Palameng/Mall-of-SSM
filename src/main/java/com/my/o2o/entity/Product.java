@@ -7,15 +7,15 @@ public class Product {
 	private Long productId;
 	private String productName;
 	private String productDesc;
-	
 	//缩略图
 	private String imgAddr;
-	private String normalPrice;
-	private String promotionPrice;
+	private String normalPrice;    //原价
+	private String promotionPrice; //现价
 	private Integer priority;
 	private Date createTime;
 	private Date lastEditTime;
-	private Integer enableStatus;		//0 下架 1 在前端系统展示
+	//0 下架 1 在前端系统展示
+	private Integer enableStatus;	
 	
 	private List<ProductImg> productImgList;
 	private ProductCategory productCategory;
