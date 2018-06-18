@@ -32,12 +32,13 @@ $(function() {
 								$('#product-desc').val(product.productDesc);
 								$('#priority').val(product.priority);
 								$('#normal-price').val(product.normalPrice);
-								$('#promotion-price').val(
-										product.promotionPrice);
+								$('#promotion-price').val(product.promotionPrice);
+								
 								// 获取原本的商品类别以及该店铺的所有商品类别列表
 								var optionHtml = '';
 								var optionArr = data.productCategoryList;
 								var optionSelected = product.productCategory.productCategoryId;
+								
 								// 生成前端的HTML商品类别列表，并默认选择编辑前的商品类别
 								optionArr
 										.map(function(item, index) {
@@ -101,6 +102,7 @@ $(function() {
 
 				// 获取缩略图文件流
 				var thumbnail = $('#small-img')[0].files[0];
+				
 				// 生成表单对象，用于接收参数并传递给后台
 				var formData = new FormData();
 				formData.append('thumbnail', thumbnail);
@@ -114,8 +116,10 @@ $(function() {
 										$('.detail-img')[index].files[0]);
 							}
 						});
+				
 				// 将product json对象转成字符流保存至表单对象key为productStr的的键值对里
 				formData.append('productStr', JSON.stringify(product));
+				
 				// 获取表单里输入的验证码
 				var verifyCodeActual = $('#j_captcha').val();
 				if (!verifyCodeActual) {
@@ -123,6 +127,7 @@ $(function() {
 					return;
 				}
 				formData.append("verifyCodeActual", verifyCodeActual);
+				
 				// 将数据提交至后台处理相关操作
 				$.ajax({
 					url : productPostUrl,

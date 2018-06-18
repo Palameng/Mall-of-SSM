@@ -27,6 +27,7 @@ public class ProductDaoTest extends BaseTest {
 	private ProductImgDao productImgDao;
 
 	@Test
+	@Ignore
 	public void testA_InsertProduct() throws Exception {
 		Shop shop1 = new Shop();
 		shop1.setShopId(1L);
@@ -95,10 +96,10 @@ public class ProductDaoTest extends BaseTest {
 	}
 
 	@Test
-	@Ignore
 	public void testC_QueryProductByProductId() throws Exception {
-		long productId = 1;
-		// 初始化两个商品详情图实例作为productId为1的商品下的详情图片
+		long productId = 2;
+		
+		// 初始化两个商品详情图实例作为productId为2的商品下的详情图片
 		// 批量插入到商品详情图表中
 		ProductImg productImg1 = new ProductImg();
 		productImg1.setImgAddr("图片1");
@@ -116,25 +117,26 @@ public class ProductDaoTest extends BaseTest {
 		productImgList.add(productImg2);
 		int effectedNum = productImgDao.batchInsertProductImg(productImgList);
 		assertEquals(2, effectedNum);
-		// 查询productId为1的商品信息并校验返回的详情图实例列表size是否为2
+		
+		// 查询productId为2的商品信息并校验返回的详情图实例列表size是否为2
 		Product product = productDao.queryProductById(productId);
 		assertEquals(2, product.getProductImgList().size());
+		
 		// 删除新增的这两个商品详情图实例
 		effectedNum = productImgDao.deleteProductImgByProductId(productId);
 		assertEquals(2, effectedNum);
 	}
 
 	@Test
-	@Ignore
 	public void testD_UpdateProduct() throws Exception {
 		Product product = new Product();
 		ProductCategory pc = new ProductCategory();
 		Shop shop = new Shop();
 		shop.setShopId(1L);
 		pc.setProductCategoryId(2L);
-		product.setProductId(1L);
+		product.setProductId(2L);
 		product.setShop(shop);
-		product.setProductName("第二个产品");
+		product.setProductName("测试测试");
 		product.setProductCategory(pc);
 		// 修改productId为1的商品的名称
 		// 以及商品类别并校验影响的行数是否为1

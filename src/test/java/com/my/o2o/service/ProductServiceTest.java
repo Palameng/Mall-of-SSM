@@ -28,6 +28,7 @@ public class ProductServiceTest extends BaseTest {
 	private ProductService productService;
 
 	@Test
+	@Ignore
 	public void testAddProduct() throws ShopOperationException, FileNotFoundException {
 		// 创建shopId为1且productCategoryId为1的商品实例并给其成员变量赋值
 		Product product = new Product();
@@ -63,34 +64,36 @@ public class ProductServiceTest extends BaseTest {
 	}
 
 	@Test
-	@Ignore
 	public void testModifyProduct() throws ShopOperationException, FileNotFoundException {
 		// 创建shopId为1且productCategoryId为1的商品实例并给其成员变量赋值
 		Product product = new Product();
 		Shop shop = new Shop();
 		shop.setShopId(1L);
 		ProductCategory pc = new ProductCategory();
-		pc.setProductCategoryId(1L);
-		product.setProductId(1L);
+		pc.setProductCategoryId(12L);
+		product.setProductId(2L);
 		product.setShop(shop);
 		product.setProductCategory(pc);
-		product.setProductName("正式的商品");
-		product.setProductDesc("正式的商品");
+		product.setProductName("测试testModifyProduct方法");
+		product.setProductDesc("测试testModifyProduct方法");
+		
 		// 创建缩略图文件流
-		File thumbnailFile = new File("/Users/baidu/work/image/ercode.jpg");
+		File thumbnailFile = new File("C:/Users/Administrator/Desktop/imageOfSSM/lainhart.png");
 		InputStream is = new FileInputStream(thumbnailFile);
 		ImageHolder thumbnail = new ImageHolder(thumbnailFile.getName(), is);
+		
 		// 创建两个商品详情图文件流并将他们添加到详情图列表中
-		File productImg1 = new File("/Users/baidu/work/image/xiaohuangren.jpg");
+		File productImg1 = new File("C:/Users/Administrator/Desktop/imageOfSSM/costa.jpg");
 		InputStream is1 = new FileInputStream(productImg1);
-		File productImg2 = new File("/Users/baidu/work/image/dabai.jpg");
+		File productImg2 = new File("C:/Users/Administrator/Desktop/imageOfSSM/dog.jpg");
 		InputStream is2 = new FileInputStream(productImg2);
 		List<ImageHolder> productImgList = new ArrayList<ImageHolder>();
 		productImgList.add(new ImageHolder(productImg1.getName(), is1));
 		productImgList.add(new ImageHolder(productImg2.getName(), is2));
+		
 		// 添加商品并验证
-		//ProductExecution pe = productService.modifyProduct(product, thumbnail, productImgList);
-		//assertEquals(ProductStateEnum.SUCCESS.getState(), pe.getState());
+		ProductExecution pe = productService.modifyProduct(product, thumbnail, productImgList);
+		assertEquals(ProductStateEnum.SUCCESS.getState(), pe.getState());
 	}
 
 }

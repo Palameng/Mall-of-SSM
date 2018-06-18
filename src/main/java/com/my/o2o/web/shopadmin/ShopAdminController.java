@@ -31,4 +31,10 @@ public class ShopAdminController {
         //这里这么配置是因为在spring-web.xml中设置了视图解析器
         return "shop/productcategorymanagement";
     }
+    
+    @RequestMapping(value="/productoperation")
+    public String productOperation(){
+        //这里这么配置是因为在spring-web.xml中设置了视图解析器
+        return "shop/productoperation";
+    }
 }
