@@ -78,24 +78,26 @@ public class ProductDaoTest extends BaseTest {
 	}
 
 	@Test
-	@Ignore
 	public void testB_QueryProductList() throws Exception {
 		Product productCondition = new Product();
 		// 分页查询，预期返回三条结果
 		List<Product> productList = productDao.queryProductList(productCondition, 0, 3);
 		assertEquals(3, productList.size());
-		// 查询名称为测试的商品总数
+		
+		// 查询商品总数
 		int count = productDao.queryProductCount(productCondition);
-		assertEquals(5, count);
-		// 使用商品名称模糊查询，预期返回两条结果
+		assertEquals(6, count);
+		
+		// 使用商品名称为测试的模糊查询，预期返回两条结果
 		productCondition.setProductName("测试");
 		productList = productDao.queryProductList(productCondition, 0, 3);
-		assertEquals(2, productList.size());
+		assertEquals(3, productList.size());
 		count = productDao.queryProductCount(productCondition);
-		assertEquals(2, count);
+		assertEquals(5, count);
 	}
 
 	@Test
+	@Ignore
 	public void testC_QueryProductByProductId() throws Exception {
 		long productId = 2;
 		
@@ -128,6 +130,7 @@ public class ProductDaoTest extends BaseTest {
 	}
 
 	@Test
+	@Ignore
 	public void testD_UpdateProduct() throws Exception {
 		Product product = new Product();
 		ProductCategory pc = new ProductCategory();

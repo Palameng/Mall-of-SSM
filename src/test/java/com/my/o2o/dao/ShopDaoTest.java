@@ -84,24 +84,19 @@ public class ShopDaoTest extends BaseTest{
     @Test
     public void testQueryShopListAndCount(){
         Shop shopCondition = new Shop();
-        PersonInfo owner = new PersonInfo();
+        ShopCategory childCategory = new ShopCategory();
+        ShopCategory parentCategory = new ShopCategory();
         
-        owner.setUserId(1L);
-        shopCondition.setOwner(owner);
+        parentCategory.setShopCategoryId(1L);
+        childCategory.setParent(parentCategory);
+        shopCondition.setShopCategory(childCategory);
         
         List<Shop> shopList = shopDao.queryShopList(shopCondition, 0, 5);
         int count = shopDao.queryShopCount(shopCondition);
         
         System.out.println("查找到的数据条数：" + shopList.size());
-        System.out.println("店铺总数：" + count);
-        
-        ShopCategory sc = new ShopCategory();
-        sc.setShopCategoryId(1L);
-        shopCondition.setShopCategory(sc);
-        
-        shopList = shopDao.queryShopList(shopCondition, 0, 5);
-        count = shopDao.queryShopCount(shopCondition);    
-        
-        System.out.println("查找到类别ID为2的数据条数：" + shopList.size());        
+        System.out.println("店铺总数：" + count);    
     }
+    
+    
 }

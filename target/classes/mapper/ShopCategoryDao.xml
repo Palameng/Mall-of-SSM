@@ -8,6 +8,7 @@
             SELECT
             shop_category_id,
             shop_category_name,
+            shop_category_desc,
             shop_category_img,
             priority,
             create_time,
@@ -16,10 +17,14 @@
             FROM
             tb_shop_category
             <where>
+                <!-- 返回一级类别 -->
+                <if test="shopCategoryCondition == null">
+                    and parent_id is null
+                </if>
                 <if test="shopCategoryCondition != null">
                     and parent_id is not null
                 </if>
-                <if test="shopCategoryCondition.parent != null">
+                <if test="shopCategoryCondition != null and shopCategoryCondition.parent != null">
                     and parent_id = #{shopCategoryCondition.parent.shopCategoryId}
                 </if>
             </where>

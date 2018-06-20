@@ -16,7 +16,6 @@ public class ShopCategoryServiceImpl implements ShopCategoryService{
 
     @Override
     public List<ShopCategory> getShopCategoryList(ShopCategory shopCategoryCondition) {
-        // TODO Auto-generated method stub
         return shopCategoryDao.queryShopCategory(shopCategoryCondition);
     }
 }
