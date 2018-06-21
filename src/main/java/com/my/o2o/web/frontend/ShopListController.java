@@ -33,7 +33,7 @@ public class ShopListController {
 
     /**
      * 返回商品列表页里的ShopCategory列表(二级或者一级)，以及区域信息列表
-     * 
+     * 如果不传parentId，则返回1级类别；传递则显示属于它的子类别列表
      * @param request
      * @return
      */
@@ -97,16 +97,16 @@ public class ShopListController {
         int pageSize = HttpServletRequestUtil.getInt(request, "pageSize");
         // 非空判断
         if ((pageIndex > -1) && (pageSize > -1)) {
-            // 试着获取一级类别Id
+            // 获取一级类别Id
             long parentId = HttpServletRequestUtil.getLong(request, "parentId");
             
-            // 试着获取特定二级类别Id
+            // 获取特定二级类别Id
             long shopCategoryId = HttpServletRequestUtil.getLong(request, "shopCategoryId");
             
-            // 试着获取区域Id
+            // 获取区域Id
             int areaId = HttpServletRequestUtil.getInt(request, "areaId");
             
-            // 试着获取模糊查询的名字
+            // 获取模糊查询的名字
             String shopName = HttpServletRequestUtil.getString(request, "shopName");
             
             // 获取组合之后的查询条件
